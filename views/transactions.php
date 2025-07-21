@@ -29,16 +29,15 @@
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Check #</th>
-                    <th scope="col"></th>Description</th>
-                    <th scope="col"></th>Amount</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    
-                ?>
                 <tr>
-
+                <?php
+                print_csv();
+                ?>
                 </tr>
             </tbody>
             <tfoot>
