@@ -30,7 +30,9 @@ function get_csvs_data(): array{
                     $j++;
                     continue;
                 }
-                $data[] = ["Date" => $line[0], "Check #" => $line[1], "Description" => $line[2], "Amount" => $line[3]]; 
+                $line[3] = str_replace("$", "", $line[3]);
+                $amount = floatval($line[3]);
+                $data[] = ["Date" => $line[0], "Check #" => $line[1], "Description" => $line[2], "Amount" => $amount]; 
                 $j++;
             }
             fclose($file);
@@ -43,12 +45,19 @@ function get_csvs_data(): array{
 }
 function print_csv() {
     $data = get_csvs_data();
-    foreach ($data as $line) {
-        echo "<tr>";
-        echo "<td>" . $line["Date"] . "</td>";
-        echo "<td>" . $line["Check #"] . "</td>";
-        echo "<td>" . $line["Description"] . "</td>";
-        echo "<td>" . $line["Amount"] . "</td>";
-        echo "</tr>";
-    }
+    var_dump($data);
+    // foreach ($data as $line) {
+    //     echo "<tr>";
+    //     echo "<td>" . $line["Date"] . "</td>";
+    //     echo "<td>" . $line["Check #"] . "</td>";
+    //     echo "<td>" . $line["Description"] . "</td>";
+    //     echo "<td>" . $line["Amount"] . "</td>";
+    //     echo "</tr>";
+    // }
 }
+//TODO: consertar cast data type
+$texto = "-$1,303.97";
+$texto = str_replace("$", "", $texto);
+echo "{$texto} <br>";
+$amount = (float)$texto;
+echo "{$amount}";
