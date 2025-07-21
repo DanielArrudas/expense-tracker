@@ -27,14 +27,19 @@
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Check #</th>
-                    <th>Description</th>
-                    <th>Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Check #</th>
+                    <th scope="col"></th>Description</th>
+                    <th scope="col"></th>Amount</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- YOUR CODE -->
+                <?php
+                    
+                ?>
+                <tr>
+
+                </tr>
             </tbody>
             <tfoot>
                 <tr>
