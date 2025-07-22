@@ -49,13 +49,13 @@
             <?php if (!empty($transactions)): ?>
                 <?php foreach ($transactions as $transaction): ?>
                     <tr>
-                        <td><?= formatDate($transaction['Date']) ?></td>
-                        <td><?= htmlspecialchars($transaction['Check #']) ?></td>
-                        <td><?= htmlspecialchars($transaction['Description']) ?></td>
-                        <?php if ($transaction['Amount'] < 0): ?>
-                            <td class='expense'><?= formatAmount($transaction['Amount']) ?></td>
+                        <td><?= formatDate($transaction['date']) ?></td>
+                        <td><?= htmlspecialchars($transaction['checkNumber']) ?></td>
+                        <td><?= htmlspecialchars($transaction['description']) ?></td>
+                        <?php if ($transaction['amount'] < 0): ?>
+                            <td class='expense'><?= formatAmount($transaction['amount']) ?></td>
                         <?php else: ?>
-                            <td class='income'><?= formatAmount($transaction['Amount']) ?></td>
+                            <td class='income'><?= formatAmount($transaction['amount']) ?></td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
@@ -64,15 +64,15 @@
         <tfoot>
             <tr>
                 <th colspan="3">Total Income:</th>
-                <td><?php echo formatAmount($totals['income']); ?></td>
+                <td><?= formatAmount($totals['totalIncome'] ?? 0) ?></td>
             </tr>
             <tr>
                 <th colspan="3">Total Expense:</th>
-                <td><?php echo formatAmount($totals['expense']); ?></td>
+                <td><?= formatAmount($totals['totalExpense'] ?? 0) ?></td>
             </tr>
             <tr>
                 <th colspan="3">Net Total:</th>
-                <td><?php echo formatAmount($totals['net']); ?></td>
+                <td><?= formatAmount($totals['netTotal'] ?? 0) ?></td>
             </tr>
         </tfoot>
     </table>
