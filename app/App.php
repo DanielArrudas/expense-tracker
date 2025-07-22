@@ -56,6 +56,7 @@ define('DATA', get_csvs_data());
 function print_csv()
 {
     foreach (DATA as $line) {
+        $line["Date"] = date("M j, o", strtotime($line["Date"]));
         echo "<tr>";
         echo "<td>" . $line["Date"] . "</td>";
         echo "<td>" . $line["Check #"] . "</td>";
@@ -70,7 +71,6 @@ function print_csv()
         echo "</tr>";
     }
 }
-
 function total_income(): float
 {
     $totalIncome = 0.0;
