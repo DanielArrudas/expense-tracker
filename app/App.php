@@ -43,77 +43,35 @@ function get_csvs_data(): array
 
     return $data;
 }
-define('DATA', get_csvs_data());
-function print_csv()
+function calculate_totals(array $transactions): array
 {
-    foreach (DATA as $line) {
-        $line["Date"] = date("M j, o", strtotime($line["Date"]));
-        echo "<tr>";
-        echo "<td>" . $line["Date"] . "</td>";
-        echo "<td>" . $line["Check #"] . "</td>";
-        echo "<td>" . $line["Description"] . "</td>";
-        $amount = number_format($line["Amount"], 2, ".", ",");
-        if ($line["Amount"] < 0) {
-            $amount = substr_replace($amount, "$", 1, 0);
-            echo "<td class='expense'>" . $amount . "</td>";
-        }
-        if ($line["Amount"] > 0)
-            echo "<td class='income'>$" . $amount . "</td>";
-        echo "</tr>";
-    }
-}
-function total_income(): float
-{
-    $totalIncome = 0.0;
-    foreach (DATA as $item) {
-        if ($item["Amount"] > 0) {
-            $totalIncome += $item["Amount"];
+    $totals = ['income' => 0.0, 'expense' => 0.0, 'net' => 0.0];
+
+    foreach ($transactions as $transaction) {
+        if ($transaction['Amount'] > 0) {
+            $totals['income'] += $transaction['Amount'];
+        } else {
+            $totals['expense'] += $transaction['Amount'];
         }
     }
-    return $totalIncome;
-}
-function print_total_income(): void
-{
-    $totalIncome = total_income();
-    $amount = number_format($totalIncome, 2, ".", ",");
-    echo "$" . $amount;
-}
-function total_expense(): float
-{
-    $totalExpense = 0.0;
-    foreach (DATA as $item) {
-        if ($item["Amount"] < 0) {
-            $totalExpense += $item["Amount"];
-        }
-    }
-    return $totalExpense;
+
+    $totals['net'] = $totals['income'] + $totals['expense'];
+
+    return $totals;
 }
 
-function print_total_expense(): void
+function format_date(string $date): string
 {
-    $totalExpense = total_expense();
-    $amount = number_format($totalExpense, 2, ".", ",");
-    if ($totalExpense === 0.0) {
-        echo "$" . $amount;
-    } else {
-        $amount = substr_replace($amount, "$", 1, 0);
-        echo $amount;
-    }
-}
-function net_total(): float
-{
-    $netTotal = total_income() + total_expense();
-    return $netTotal;
+    return date("M j, o", strtotime($date));
 }
 
-function print_net_total(): void
+function format_amount(float $amount): string
 {
-    $netTotal = net_total();
-    $amount = number_format($netTotal, 2, ".", ",");
-    if ($netTotal >= 0.0) {
-        echo "$" . $amount;
-    } else {
-        $amount = substr_replace($amount, "$", 1, 0);
-        echo $amount;
+    $formatted = number_format(abs($amount), 2);
+
+    if($amount < 0){
+        return "-$" . $formatted;
     }
+
+    return "$" . $formatted;
 }
