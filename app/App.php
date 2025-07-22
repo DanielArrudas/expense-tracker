@@ -52,10 +52,10 @@ function get_csvs_data(): array
 
     return $data;
 }
+define('DATA', get_csvs_data());
 function print_csv()
 {
-    $data = get_csvs_data();
-    foreach ($data as $line) {
+    foreach (DATA as $line) {
         echo "<tr>";
         echo "<td>" . $line["Date"] . "</td>";
         echo "<td>" . $line["Check #"] . "</td>";
@@ -68,5 +68,61 @@ function print_csv()
         if ($line["Amount"] > 0)
             echo "<td class='income'>$" . $amount . "</td>";
         echo "</tr>";
+    }
+}
+
+function total_income(): float
+{
+    $totalIncome = 0.0;
+    foreach (DATA as $item) {
+        if ($item["Amount"] > 0) {
+            $totalIncome += $item["Amount"];
+        }
+    }
+    return $totalIncome;
+}
+function print_total_income(): void
+{
+    $totalIncome = total_income();
+    $amount = number_format($totalIncome, 2, ".", ",");
+    echo "$" . $amount;
+}
+function total_expense(): float
+{
+    $totalExpense = 0.0;
+    foreach (DATA as $item) {
+        if ($item["Amount"] < 0) {
+            $totalExpense += $item["Amount"];
+        }
+    }
+    return $totalExpense;
+}
+
+function print_total_expense(): void
+{
+    $totalExpense = total_expense();
+    $amount = number_format($totalExpense, 2, ".", ",");
+    if ($totalExpense === 0.0) {
+        echo "$" . $amount;
+    } else {
+        $amount = substr_replace($amount, "$", 1, 0);
+        echo $amount;
+    }
+}
+function net_total(): float
+{
+    $netTotal = total_income() + total_expense();
+    return $netTotal;
+}
+
+function print_net_total(): void
+{
+    $netTotal = net_total();
+    $amount = number_format($netTotal, 2, ".", ",");
+    if ($netTotal >= 0.0) {
+        echo "$" . $amount;
+    } else {
+        $amount = substr_replace($amount, "$", 1, 0);
+        echo $amount;
     }
 }
