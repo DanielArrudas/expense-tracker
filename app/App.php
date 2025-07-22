@@ -16,7 +16,7 @@ function getTransactions(): array
     //Esse for passa por cada csv no transaction_files
     foreach ($csvs as $csv) {
         //abrir csv
-        $file = fopen($csv, "r");
+        $file = fopen($csv, 'r');
         $j = 0;
         if ($file) {
             //passa por cada linha do csv e guarda no array data sem o header
@@ -25,8 +25,8 @@ function getTransactions(): array
                     $j++;
                     continue;
                 }
-                $amount = (float) str_replace(["$", ","], "", $line[3]);
-                $data[] = ["Date" => $line[0], "Check #" => $line[1], "Description" => $line[2], "Amount" => $amount];
+                $amount = (float) str_replace(['$', ','], '', $line[3]);
+                $data[] = ['Date' => $line[0], 'Check #' => $line[1], 'Description' => $line[2], 'Amount' => $amount];
                 $j++;
             }
             fclose($file);
@@ -52,20 +52,4 @@ function calculateTotals(array $transactions): array
     $totals['net'] = $totals['income'] + $totals['expense'];
 
     return $totals;
-}
-
-function formatDate(string $date): string
-{
-    return date("M j, o", strtotime($date));
-}
-
-function formatAmount(float $amount): string
-{
-    $formatted = number_format(abs($amount), 2);
-
-    if ($amount < 0) {
-        return "-$" . $formatted;
-    }
-
-    return "$" . $formatted;
 }

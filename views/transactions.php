@@ -53,9 +53,9 @@
                         <td><?= htmlspecialchars($transaction['Check #']) ?></td>
                         <td><?= htmlspecialchars($transaction['Description']) ?></td>
                         <?php if ($transaction['Amount'] < 0): ?>
-                            <td class="expense"><?= formatAmount($transaction['Amount']) ?></td>
+                            <td class='expense'><?= formatAmount($transaction['Amount']) ?></td>
                         <?php else: ?>
-                            <td class="income"><?= formatAmount($transaction['Amount']) ?></td>
+                            <td class='income'><?= formatAmount($transaction['Amount']) ?></td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
