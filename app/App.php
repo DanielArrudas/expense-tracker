@@ -1,20 +1,11 @@
 <?php
 
 declare(strict_types=1);
-function format_csv(array $files): array
-{
-    $files = array_diff($files, [".", ".."]);
-    $newKeys = [];
-    for ($i = 0; $i < count($files); $i++) {
-        array_push($newKeys, $i);
+function get_transaction_files(string $path): array{
+    $files = [];
+    foreach (glob($path . '*.csv') as $file){
+        $files[] = $file;
     }
-    $files = array_combine($newKeys, $files);
-    return $files;
-}
-function scan_directory(string $path): array
-{
-    $files = scandir($path);
-    $files = format_csv($files);
     return $files;
 }
 function string_to_float($string): float
@@ -26,12 +17,12 @@ function string_to_float($string): float
 }
 function get_csvs_data(): array
 {
-    $csvs = scan_directory(FILES_PATH);
+    $csvs = get_transaction_files(FILES_PATH);
     $data = [];
     //Esse for passa por cada csv no transaction_files
-    for ($i = 0; $i < count($csvs); $i++) {
+    foreach($csvs as $csv) {
         //abrir csv
-        $file = fopen(FILES_PATH . "/" . $csvs[$i], "r");
+        $file = fopen($csv, "r");
         $j = 0;
         if ($file) {
             //passa por cada linha do csv e guarda no array data sem o header
