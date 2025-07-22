@@ -9,7 +9,7 @@ define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
 define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 require_once APP_PATH . "/App.php";
 
-$transactions = get_csvs_data();
-$totals = calculate_totals($transactions);
+$transactions = getTransactions();
+$totals = calculateTotals($transactions);
 
 require_once VIEWS_PATH . "/transactions.php";

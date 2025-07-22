@@ -49,13 +49,13 @@
             <?php if (!empty($transactions)): ?>
                 <?php foreach ($transactions as $transaction): ?>
                     <tr>
-                        <td><?= format_date($transaction['Date']) ?></td>
+                        <td><?= formatDate($transaction['Date']) ?></td>
                         <td><?= htmlspecialchars($transaction['Check #']) ?></td>
                         <td><?= htmlspecialchars($transaction['Description']) ?></td>
                         <?php if ($transaction['Amount'] < 0): ?>
-                            <td class="expense"><?= format_amount($transaction['Amount']) ?></td>
+                            <td class="expense"><?= formatAmount($transaction['Amount']) ?></td>
                         <?php else: ?>
-                            <td class="income"><?= format_amount($transaction['Amount']) ?></td>
+                            <td class="income"><?= formatAmount($transaction['Amount']) ?></td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
@@ -64,15 +64,15 @@
         <tfoot>
             <tr>
                 <th colspan="3">Total Income:</th>
-                <td><?php echo format_amount($totals['income']); ?></td>
+                <td><?php echo formatAmount($totals['income']); ?></td>
             </tr>
             <tr>
                 <th colspan="3">Total Expense:</th>
-                <td><?php echo format_amount($totals['expense']); ?></td>
+                <td><?php echo formatAmount($totals['expense']); ?></td>
             </tr>
             <tr>
                 <th colspan="3">Net Total:</th>
-                <td><?php echo format_amount($totals['net']); ?></td>
+                <td><?php echo formatAmount($totals['net']); ?></td>
             </tr>
         </tfoot>
     </table>

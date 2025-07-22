@@ -1,26 +1,20 @@
 <?php
 
 declare(strict_types=1);
-function get_transaction_files(string $path): array{
+function getTransactionFiles(string $path): array
+{
     $files = [];
-    foreach (glob($path . '*.csv') as $file){
+    foreach (glob($path . '*.csv') as $file) {
         $files[] = $file;
     }
     return $files;
 }
-function string_to_float($string): float
+function getTransactions(): array
 {
-    $string = str_replace("$", "", $string);
-    $string = str_replace(",", "", $string);
-    $amount = floatval($string);
-    return $amount;
-}
-function get_csvs_data(): array
-{
-    $csvs = get_transaction_files(FILES_PATH);
+    $csvs = getTransactionFiles(FILES_PATH);
     $data = [];
     //Esse for passa por cada csv no transaction_files
-    foreach($csvs as $csv) {
+    foreach ($csvs as $csv) {
         //abrir csv
         $file = fopen($csv, "r");
         $j = 0;
@@ -31,7 +25,7 @@ function get_csvs_data(): array
                     $j++;
                     continue;
                 }
-                $amount = string_to_float($line[3]);
+                $amount = (float) str_replace(["$", ","], "", $line[3]);
                 $data[] = ["Date" => $line[0], "Check #" => $line[1], "Description" => $line[2], "Amount" => $amount];
                 $j++;
             }
@@ -43,7 +37,7 @@ function get_csvs_data(): array
 
     return $data;
 }
-function calculate_totals(array $transactions): array
+function calculateTotals(array $transactions): array
 {
     $totals = ['income' => 0.0, 'expense' => 0.0, 'net' => 0.0];
 
@@ -60,16 +54,16 @@ function calculate_totals(array $transactions): array
     return $totals;
 }
 
-function format_date(string $date): string
+function formatDate(string $date): string
 {
     return date("M j, o", strtotime($date));
 }
 
-function format_amount(float $amount): string
+function formatAmount(float $amount): string
 {
     $formatted = number_format(abs($amount), 2);
 
-    if($amount < 0){
+    if ($amount < 0) {
         return "-$" . $formatted;
     }
 
